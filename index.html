@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semilleros</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --rojo:     #FF4D6D;
+  --naranja:  #FF8C42;
+  --amarillo: #FFD166;
+  --verde:    #06D6A0;
+  --azul:     #118AB2;
+  --morado:   #9B5DE5;
+  --rosa:     #F72585;
+  --fondo:    #FFFBF0;
+  --oscuro:   #1a1a2e;
+}
+body {
+  background: var(--fondo);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+.rainbow-bar {
+  height: 8px;
+  background: linear-gradient(90deg, var(--rojo), var(--naranja), var(--amarillo), var(--verde), var(--azul), var(--morado), var(--rosa));
+  background-size: 200% 100%;
+  animation: slideColors 4s linear infinite;
+  position: relative; z-index: 10;
+}
+@keyframes slideColors {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 10;
+  text-align: center;
+  padding: 3.5rem 2rem 1.5rem;
+}
+
+/* Estrellas SVG decorativas */
+.stars-row {
+  display: flex; justify-content: center; align-items: center; gap: 0.7rem; margin-bottom: 1.2rem;
+}
+.star-svg {
+  animation: spinStar 4s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.star-svg.small { width: 16px; height: 16px; animation-delay: 0.5s; }
+.star-svg.med   { width: 22px; height: 22px; }
+.star-svg.small2{ width: 16px; height: 16px; animation-delay: 1.5s; }
+@keyframes spinStar {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.3); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.header-badge {
+  display: inline-block;
+  background: var(--morado);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.35rem 2.4rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 0 #6a2fb5;
+}
+.header-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(3.5rem, 10vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.header-title .l1 { color: var(--rojo); }
+.header-title .l2 { color: var(--azul); }
+.header-title .l3 { color: var(--amarillo); }
+.header-title .l4 { color: var(--morado); }
+.header-title .l5 { color: var(--verde); }
+.header-title .l6 { color: var(--rojo); }
+.header-title .l7 { color: var(--azul); }
+.header-title .l8 { color: var(--naranja); }
+.header-title .l9 { color: var(--morado); }
+
+/* Versículo */
+.header-verse {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--oscuro);
+  opacity: 0.5;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* ── ZIGZAG ── */
+.confetti-row {
+  width: 100%; max-width: 1120px;
+  margin: 2rem auto 0;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.confetti-row span {
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: bounceDot 1.6s ease-in-out infinite;
+}
+.confetti-row span.big   { width: 14px; height: 14px; }
+.confetti-row span.med   { width: 10px; height: 10px; }
+.confetti-row span.small { width:  7px; height:  7px; }
+
+/* ── MAIN ── */
+main {
+  position: relative; z-index: 10;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 2rem 2rem;
+}
+
+/* ── SECCIÓN LABEL ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+.section-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--oscuro);
+  color: var(--amarillo);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+.section-line {
+  flex: 1;
+  height: 3px;
+  border-radius: 10px;
+  background: linear-gradient(to right, rgba(26,26,46,0.15), transparent);
+}
+
+/* ── GRID CLASES ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+/* ── TARJETA ── */
+.card {
+  border-radius: 24px;
+  padding: 0;
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  cursor: default;
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  z-index: -1;
+  transform: translate(5px, 6px);
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+.card:hover { transform: translate(-3px, -3px); }
+.card:hover::after { transform: translate(8px, 9px); }
+.card.c-rojo::after   { background: #b5173a; }
+.card.c-naranja::after{ background: #b5570f; }
+.card.c-verde::after  { background: #047a5b; }
+.card.c-azul::after   { background: #0a5c7a; }
+.card.c-morado::after { background: #5e2a99; }
+.card.c-rojo   { background: var(--rojo); }
+.card.c-naranja{ background: var(--naranja); }
+.card.c-verde  { background: var(--verde); }
+.card.c-azul   { background: var(--azul); }
+.card.c-morado { background: var(--morado); }
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.19s; }
+.card:nth-child(4) { animation-delay: 0.26s; }
+.card:nth-child(5) { animation-delay: 0.33s; }
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7) rotate(-3deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+.card-inner {
+  background: #fff;
+  border-radius: 18px;
+  margin: 6px;
+  padding: 1.5rem 1.6rem 1.6rem;
+  height: calc(100% - 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--oscuro);
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+.card-icon {
+  width: 44px; height: 44px;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink: 0;
+}
+.card:hover .card-icon { transform: scale(1.2) rotate(-8deg); }
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.25rem;
+  color: var(--oscuro);
+  line-height: 1.25;
+  min-height: 3.2rem;
+}
+.card-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0.02em;
+}
+.card-sep {
+  height: 3px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.c-rojo    .card-sep { background: var(--rojo); }
+.c-naranja .card-sep { background: var(--naranja); }
+.c-verde   .card-sep { background: var(--verde); }
+.c-azul    .card-sep { background: var(--azul); }
+.c-morado  .card-sep { background: var(--morado); }
+.card-links { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
+.link-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.62rem 1.1rem;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  border: none;
+  cursor: pointer;
+}
+.link-btn svg { flex-shrink: 0; }
+.c-rojo    .link-btn.primary { background: var(--rojo);    color: #fff; box-shadow: 0 4px 0 #b5173a; }
+.c-naranja .link-btn.primary { background: var(--naranja); color: #fff; box-shadow: 0 4px 0 #b5570f; }
+.c-verde   .link-btn.primary { background: var(--verde);   color: #fff; box-shadow: 0 4px 0 #047a5b; }
+.c-azul    .link-btn.primary { background: var(--azul);    color: #fff; box-shadow: 0 4px 0 #0a5c7a; }
+.c-morado  .link-btn.primary { background: var(--morado);  color: #fff; box-shadow: 0 4px 0 #5e2a99; }
+.link-btn.primary:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.link-btn.primary:active { transform: translateY(2px); box-shadow: none !important; }
+.link-btn.secondary {
+  background: var(--amarillo);
+  color: var(--oscuro);
+  box-shadow: 0 4px 0 #c9a000;
+}
+.link-btn.secondary:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.link-btn.secondary:active { transform: translateY(2px); box-shadow: none; }
+.link-btn.pending {
+  background: #f0f0f0;
+  color: #aaa;
+  box-shadow: 0 4px 0 #d0d0d0;
+  pointer-events: none;
+  font-style: italic;
+}
+
+/* ── SECCIONES EXTRA (Capacitaciones / Asistencia) ── */
+.extra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.extra-card {
+  border-radius: 24px;
+  padding: 0;
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+.extra-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  z-index: -1;
+  transform: translate(5px, 6px);
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+.extra-card:hover { transform: translate(-3px, -3px); }
+.extra-card:hover::after { transform: translate(8px, 9px); }
+
+.extra-card.ex-youtube { background: #FF0000; }
+.extra-card.ex-youtube::after { background: #8b0000; }
+.extra-card.ex-excel   { background: #1D6F42; }
+.extra-card.ex-excel::after   { background: #0e3d24; }
+
+.extra-card-inner {
+  background: #fff;
+  border-radius: 18px;
+  margin: 6px;
+  padding: 1.8rem 1.8rem 2rem;
+  height: calc(100% - 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.extra-card-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.extra-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ex-youtube .extra-icon-wrap { background: #FF0000; }
+.ex-excel   .extra-icon-wrap { background: #1D6F42; }
+
+.extra-icon-wrap svg { width: 28px; height: 28px; }
+
+.extra-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--oscuro);
+  line-height: 1.2;
+}
+.extra-desc {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #666;
+  line-height: 1.5;
+}
+.extra-card .card-sep { height: 3px; border-radius: 10px; }
+.ex-youtube .card-sep { background: #FF0000; }
+.ex-excel   .card-sep { background: #1D6F42; }
+
+.ex-youtube .link-btn.primary { background: #FF0000; color: #fff; box-shadow: 0 4px 0 #8b0000; }
+.ex-excel   .link-btn.primary { background: #1D6F42; color: #fff; box-shadow: 0 4px 0 #0e3d24; }
+.extra-card .link-btn.primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 10;
+  text-align: center;
+  padding: 2.5rem 1rem 3rem;
+}
+.footer-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--oscuro);
+  color: #fff;
+  padding: 0.7rem 2rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.footer-dots { display: flex; gap: 5px; }
+.footer-dots span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounceDot 1.2s ease-in-out infinite;
+}
+.footer-dots span:nth-child(1){ background:var(--rojo);     animation-delay:0s; }
+.footer-dots span:nth-child(2){ background:var(--amarillo); animation-delay:0.15s; }
+.footer-dots span:nth-child(3){ background:var(--verde);    animation-delay:0.3s; }
+.footer-dots span:nth-child(4){ background:var(--azul);     animation-delay:0.45s; }
+.footer-dots span:nth-child(5){ background:var(--morado);   animation-delay:0.6s; }
+@keyframes bounceDot {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-5px); }
+}
+@media (max-width: 500px) {
+  header { padding: 2.5rem 1rem 1rem; }
+  main { padding: 0 1rem 2rem; }
+  .cards-grid, .extra-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+
+<!-- HEADER -->
+<header>
+  <!-- Estrellas SVG (sin emojis) -->
+  <div class="stars-row">
+    <svg class="star-svg med" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#FF4D6D" stroke="#FF4D6D" stroke-width="1"/>
+    </svg>
+    <svg class="star-svg small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#FFD166" stroke="#FFD166" stroke-width="1"/>
+    </svg>
+    <svg class="star-svg med" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation-delay:1s">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#06D6A0" stroke="#06D6A0" stroke-width="1"/>
+    </svg>
+    <svg class="star-svg small2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#9B5DE5" stroke="#9B5DE5" stroke-width="1"/>
+    </svg>
+    <svg class="star-svg med" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation-delay:2s">
+      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#FF8C42" stroke="#FF8C42" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="header-badge">
+    · MINISTERIO INFANTIL ·
+  </div>
+
+  <div class="header-title">
+    <span class="l1">S</span><span class="l2">e</span><span class="l3">m</span><span class="l4">i</span><span class="l5">l</span><span class="l8">l</span><span class="l6">e</span><span class="l2">r</span><span class="l5">o</span><span class="l9">s</span>
+  </div>
+
+  <p class="header-verse">
+    "Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él"<br>
+    <span style="opacity:0.7; font-style:normal;">Proverbios 22:6</span>
+  </p>
+</header>
+
+<!-- DIVIDER -->
+<div style="max-width:1120px; margin: 2rem auto 0; padding: 0 2rem;">
+  <div style="height:3px; border-radius:10px; background: linear-gradient(to right, transparent, #FF4D6D, #FF8C42, #FFD166, #06D6A0, #118AB2, #9B5DE5, #F72585, transparent);"></div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- ── SECCIÓN: CLASES ── -->
+  <div class="section-header">
+    <div class="section-pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#FFD166" stroke-width="2.2" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#FFD166" stroke-width="2.2"/></svg>
+      5 clases disponibles
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- 01 -->
+    <div class="card c-azul">
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-num">01</div>
+          <svg class="card-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- agua -->
+            <ellipse cx="32" cy="52" rx="28" ry="8" fill="#AEE9F5" opacity=".5"/>
+            <path d="M4 48 Q16 44 32 48 Q48 52 60 48" stroke="#118AB2" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M4 52 Q16 48 32 52 Q48 56 60 52" stroke="#5BC8E8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- barca -->
+            <path d="M14 44 Q14 36 22 36 L42 36 Q50 36 50 44 Z" fill="#E8C07A"/>
+            <path d="M12 44 L52 44 Q50 50 32 50 Q14 50 12 44Z" fill="#C9964A"/>
+            <!-- mástil y vela -->
+            <line x1="32" y1="36" x2="32" y2="16" stroke="#7A5230" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M32 18 Q44 22 43 32 L32 36 Z" fill="#FF8C42" opacity=".85"/>
+            <!-- figura Jesús brazo extendido -->
+            <circle cx="24" cy="28" r="4" fill="#FFDAB5"/>
+            <path d="M24 32 L24 43" stroke="#9B5DE5" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 35 L17 31" stroke="#9B5DE5" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24 35 L32 33" stroke="#9B5DE5" stroke-width="2" stroke-linecap="round"/>
+            <!-- red con peces -->
+            <path d="M34 44 Q38 38 44 40 Q50 42 50 48" stroke="#7A5230" stroke-width="1.2" fill="none" opacity=".7"/>
+            <path d="M36 42 L50 46" stroke="#7A5230" stroke-width="1" opacity=".5"/>
+            <path d="M34 44 L48 44" stroke="#7A5230" stroke-width="1" opacity=".5"/>
+            <!-- pececitos en red -->
+            <ellipse cx="41" cy="43" rx="3" ry="1.8" fill="#06D6A0" opacity=".9"/>
+            <path d="M44 43 L46 41 L46 45 Z" fill="#06D6A0" opacity=".9"/>
+            <ellipse cx="46" cy="46" rx="2.5" ry="1.5" fill="#5BC8E8"/>
+            <path d="M48.5 46 L50 44 L50 48 Z" fill="#5BC8E8"/>
+            <!-- destellos sol -->
+            <circle cx="54" cy="12" r="5" fill="#FFD166" opacity=".9"/>
+            <line x1="54" y1="4"  x2="54" y2="7"  stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="62" y1="12" x2="59" y2="12" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="59" y1="7"  x2="57" y2="9"  stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="59" y1="17" x2="57" y2="15" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-title">Jesús elige a sus discípulos</div>
+        <div class="card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#bbb" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#bbb" stroke-width="2"/></svg>18 de enero de 2026</div>
+        <div class="card-sep"></div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://jesus-elige-a-sus-discipulos.my.canva.site/jesus-elige-a-sus-discipulos" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            Proyección para la clase
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="card c-naranja">
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-num">02</div>
+          <svg class="card-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- suelo -->
+            <rect x="2" y="50" width="60" height="12" rx="2" fill="#8B6914" opacity=".25"/>
+            <!-- CASA SÓLIDA (izquierda) sobre roca -->
+            <ellipse cx="18" cy="51" rx="12" ry="3" fill="#9B7B3A" opacity=".5"/>
+            <rect x="8" y="38" width="20" height="14" rx="2" fill="#FFD166"/>
+            <rect x="13" y="42" width="5" height="8" rx="1" fill="#C9964A"/>
+            <rect x="20" y="42" width="5" height="5" rx="1" fill="#AEE9F5"/>
+            <polygon points="6,38 18,24 30,38" fill="#FF8C42"/>
+            <rect x="15" y="24" width="6" height="8" fill="#b5570f"/>
+            <!-- ventana casa sólida con brillo -->
+            <rect x="20" y="42" width="5" height="5" rx="1" fill="#AEE9F5"/>
+            <line x1="22.5" y1="42" x2="22.5" y2="47" stroke="#fff" stroke-width="0.8" opacity=".7"/>
+            <line x1="20" y1="44.5" x2="25" y2="44.5" stroke="#fff" stroke-width="0.8" opacity=".7"/>
+            <!-- check verde casa sólida -->
+            <circle cx="28" cy="28" r="5" fill="#06D6A0"/>
+            <path d="M25.5 28 L27.5 30 L30.5 26" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- CASA TORCIDA (derecha) sobre arena -->
+            <ellipse cx="46" cy="51" rx="12" ry="3" fill="#E8C07A" opacity=".7"/>
+            <!-- partículas de arena -->
+            <circle cx="39" cy="50" r="1" fill="#C9964A" opacity=".6"/>
+            <circle cx="42" cy="52" r="0.8" fill="#C9964A" opacity=".5"/>
+            <circle cx="50" cy="51" r="1" fill="#C9964A" opacity=".6"/>
+            <!-- casa inclinada -->
+            <g transform="rotate(8,46,44)">
+              <rect x="36" y="38" width="20" height="14" rx="2" fill="#FF8C42" opacity=".85"/>
+              <rect x="41" y="42" width="5" height="8" rx="1" fill="#b5570f"/>
+              <rect x="48" y="42" width="5" height="5" rx="1" fill="#AEE9F5"/>
+              <polygon points="34,38 46,24 58,38" fill="#FF4D6D"/>
+              <rect x="43" y="24" width="6" height="8" fill="#b5173a"/>
+            </g>
+            <!-- X roja casa torcida -->
+            <circle cx="52" cy="22" r="5" fill="#FF4D6D"/>
+            <line x1="49.5" y1="19.5" x2="54.5" y2="24.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="54.5" y1="19.5" x2="49.5" y2="24.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- lluvia/viento sobre casa mala -->
+            <path d="M54 10 Q58 8 56 14" stroke="#118AB2" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/>
+            <path d="M58 12 Q62 10 60 16" stroke="#118AB2" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/>
+            <line x1="56" y1="16" x2="55" y2="20" stroke="#118AB2" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+            <line x1="60" y1="18" x2="59" y2="22" stroke="#118AB2" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="card-title">Los constructores sabios y tontos</div>
+        <div class="card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#bbb" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#bbb" stroke-width="2"/></svg>01 de febrero de 2026</div>
+        <div class="card-sep"></div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://jesus-elige-a-sus-discipulos.my.canva.site/los-constructores-sabios-y-tontos" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            Proyección para la clase
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="card c-verde">
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-num">03</div>
+          <svg class="card-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- cielo tormentoso -->
+            <ellipse cx="20" cy="14" rx="16" ry="9" fill="#5A7FA0" opacity=".5"/>
+            <ellipse cx="38" cy="10" rx="18" ry="10" fill="#3D5C7A" opacity=".6"/>
+            <!-- relámpago -->
+            <path d="M38 8 L34 18 L37 18 L33 28" stroke="#FFD166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- lluvia diagonal -->
+            <line x1="8"  y1="20" x2="4"  y2="30" stroke="#AEE9F5" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+            <line x1="14" y1="18" x2="10" y2="28" stroke="#AEE9F5" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+            <line x1="20" y1="16" x2="16" y2="26" stroke="#AEE9F5" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+            <line x1="50" y1="18" x2="46" y2="28" stroke="#AEE9F5" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <line x1="56" y1="20" x2="52" y2="30" stroke="#AEE9F5" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <!-- olas agitadas -->
+            <path d="M2 42 Q8 36 14 42 Q20 48 26 42 Q32 36 38 42 Q44 48 50 42 Q56 36 62 42" stroke="#118AB2" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path d="M2 48 Q8 44 14 48 Q20 52 26 48 Q32 44 38 48 Q44 52 50 48 Q56 44 62 48" stroke="#5BC8E8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- barca inclinada -->
+            <path d="M16 44 Q16 36 24 36 L44 36 Q52 36 52 44 Z" fill="#E8C07A"/>
+            <path d="M14 44 L54 44 Q51 52 34 52 Q17 52 14 44Z" fill="#C9964A"/>
+            <!-- mástil -->
+            <line x1="34" y1="36" x2="34" y2="18" stroke="#7A5230" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- vela agitada -->
+            <path d="M34 20 Q46 23 45 32 L34 36 Z" fill="#fff" opacity=".7"/>
+            <!-- figura Jesús de pie, brazo en alto -->
+            <circle cx="26" cy="28" r="3.5" fill="#FFDAB5"/>
+            <path d="M26 31.5 L26 43" stroke="#9B5DE5" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M26 34 L20 30" stroke="#9B5DE5" stroke-width="2" stroke-linecap="round"/>
+            <!-- brazo levantado al cielo — gesto de calma -->
+            <path d="M26 34 L30 26" stroke="#9B5DE5" stroke-width="2" stroke-linecap="round"/>
+            <!-- rayos de luz saliendo de mano -->
+            <line x1="30" y1="26" x2="33" y2="22" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="30" y1="26" x2="35" y2="25" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="30" y1="26" x2="34" y2="29" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- figura discípulo agazapado -->
+            <circle cx="42" cy="34" r="3" fill="#FFDAB5"/>
+            <path d="M42 37 L42 43" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
+            <path d="M42 39 L38 37" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
+            <path d="M42 39 L46 37" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-title">Jesús calma la tormenta</div>
+        <div class="card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#bbb" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#bbb" stroke-width="2"/></svg>08 de febrero de 2026</div>
+        <div class="card-sep"></div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://jesus-elige-a-sus-discipulos.my.canva.site/jesus-calma-la-tormenta" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            Proyección para la clase
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="card c-rojo">
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-num">04</div>
+          <svg class="card-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- fondo cálido -->
+            <ellipse cx="32" cy="56" rx="28" ry="6" fill="#FF4D6D" opacity=".12"/>
+            <!-- columna/puerta del juez (derecha) -->
+            <rect x="44" y="16" width="16" height="42" rx="2" fill="#E8C07A" opacity=".5"/>
+            <rect x="46" y="18" width="4" height="36" rx="1" fill="#C9964A" opacity=".4"/>
+            <rect x="52" y="18" width="4" height="36" rx="1" fill="#C9964A" opacity=".4"/>
+            <!-- EL JUEZ sentado -->
+            <rect x="42" y="34" width="18" height="12" rx="3" fill="#9B5DE5" opacity=".8"/><!-- silla/trono -->
+            <circle cx="51" cy="28" r="5" fill="#FFDAB5"/>
+            <path d="M46 33 Q46 26 51 26 Q56 26 56 33" fill="#3D5C7A"/><!-- túnica juez -->
+            <path d="M46 37 L56 37" stroke="#7A5230" stroke-width="1" opacity=".3"/>
+            <!-- corona/gorro de juez -->
+            <rect x="47" y="22" width="8" height="4" rx="1" fill="#FFD166"/>
+            <line x1="49" y1="22" x2="49" y2="20" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="51" y1="22" x2="51" y2="19" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="53" y1="22" x2="53" y2="20" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- brazo juez extendido (cediendo) -->
+            <path d="M56 36 L60 32" stroke="#FFDAB5" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- LA VIUDA arrodillada (izquierda) -->
+            <circle cx="18" cy="24" r="5" fill="#FFDAB5"/>
+            <!-- velo/pañuelo viuda -->
+            <path d="M13 24 Q13 18 18 18 Q23 18 23 24 Q23 20 18 20 Q13 20 13 24Z" fill="#FF4D6D" opacity=".7"/>
+            <!-- cuerpo arrodillado -->
+            <path d="M18 29 Q18 40 16 44" stroke="#FF4D6D" stroke-width="3" stroke-linecap="round"/>
+            <path d="M18 29 Q18 40 20 44" stroke="#FF4D6D" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="18" cy="44" rx="5" ry="2.5" fill="#FF4D6D" opacity=".6"/>
+            <!-- brazos levantados suplicando -->
+            <path d="M18 33 L10 26" stroke="#FFDAB5" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 33 L26 26" stroke="#FFDAB5" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- manos abiertas -->
+            <circle cx="10" cy="25" r="2.2" fill="#FFDAB5"/>
+            <circle cx="26" cy="25" r="2.2" fill="#FFDAB5"/>
+            <!-- rayos de oración / luz divina -->
+            <line x1="8"  y1="10" x2="10" y2="16" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+            <line x1="14" y1="6"  x2="14" y2="12" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+            <line x1="20" y1="4"  x2="18" y2="10" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+            <line x1="26" y1="6"  x2="22" y2="12" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <!-- corazón flotante entre ambos -->
+            <path d="M31 30 Q33 27 35 30 Q37 33 33 36 Q29 33 31 30Z" fill="#FF4D6D" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="card-title">La parábola de la viuda persistente</div>
+        <div class="card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#bbb" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#bbb" stroke-width="2"/></svg>08 de marzo de 2026</div>
+        <div class="card-sep"></div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://leirylauramc.github.io/Scape_room_biblico_La_parabola_de_la_viuda_persistente/" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="#fff"/></svg>
+            Proyección para la clase
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="card c-morado">
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-num">05</div>
+          <svg class="card-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- camino -->
+            <path d="M2 58 Q32 48 62 58" fill="#E8C07A" opacity=".4"/>
+            <path d="M10 60 Q32 52 54 60" fill="#C9964A" opacity=".3"/>
+            <!-- rocas/desierto -->
+            <ellipse cx="8" cy="52" rx="6" ry="3" fill="#9B7B3A" opacity=".4"/>
+            <ellipse cx="56" cy="50" rx="5" ry="2.5" fill="#9B7B3A" opacity=".3"/>
+            <!-- palmera de fondo -->
+            <line x1="56" y1="52" x2="56" y2="30" stroke="#7A5230" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M56 30 Q48 24 44 28 Q50 28 56 30Z" fill="#06D6A0" opacity=".8"/>
+            <path d="M56 30 Q64 22 62 28 Q60 28 56 30Z" fill="#06D6A0" opacity=".7"/>
+            <path d="M56 30 Q54 20 58 24 Z" fill="#06D6A0" opacity=".6"/>
+            <!-- HOMBRE HERIDO en el suelo -->
+            <ellipse cx="22" cy="50" rx="12" ry="4" fill="#FF4D6D" opacity=".15"/>
+            <circle cx="14" cy="44" r="4" fill="#FFDAB5"/>
+            <!-- cuerpo tendido -->
+            <path d="M14 48 Q20 50 32 50" stroke="#b5570f" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 50 Q36 50 38 48" stroke="#b5570f" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- piernas -->
+            <path d="M32 50 L36 54" stroke="#b5570f" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M34 50 L38 53" stroke="#b5570f" stroke-width="2" stroke-linecap="round"/>
+            <!-- vendaje/herida -->
+            <ellipse cx="22" cy="48" rx="4" ry="2" fill="#fff" opacity=".7"/>
+            <path d="M19 48 L25 48" stroke="#FF4D6D" stroke-width="1.2" opacity=".6"/>
+            <!-- EL SAMARITANO agachado ayudando -->
+            <circle cx="30" cy="36" r="4.5" fill="#FFDAB5"/>
+            <!-- cabello/turbante -->
+            <path d="M26 35 Q26 30 30 30 Q34 30 34 35" fill="#9B5DE5" opacity=".8"/>
+            <!-- cuerpo inclinado hacia herido -->
+            <path d="M30 40 Q28 46 22 48" stroke="#9B5DE5" stroke-width="3" stroke-linecap="round"/>
+            <path d="M30 40 L34 44" stroke="#9B5DE5" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- brazo extendido ayudando -->
+            <path d="M30 42 L20 46" stroke="#FFDAB5" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="19" cy="46" r="2" fill="#FFDAB5"/>
+            <!-- bolsa/aceite del samaritano -->
+            <ellipse cx="37" cy="46" rx="4" ry="3" fill="#FFD166"/>
+            <rect x="35" y="42" width="4" height="4" rx="1" fill="#C9964A"/>
+            <line x1="37" y1="42" x2="37" y2="40" stroke="#7A5230" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- burro de fondo -->
+            <ellipse cx="50" cy="46" rx="8" ry="5" fill="#C9964A" opacity=".7"/>
+            <circle cx="44" cy="42" r="3.5" fill="#C9964A" opacity=".7"/>
+            <line x1="42" y1="38" x2="41" y2="34" stroke="#C9964A" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+            <line x1="44" y1="38" x2="44" y2="34" stroke="#C9964A" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+            <line x1="46" y1="51" x2="45" y2="56" stroke="#C9964A" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="51" x2="51" y2="56" stroke="#C9964A" stroke-width="2" stroke-linecap="round"/>
+            <!-- corazón sobre escena -->
+            <path d="M29 22 Q31 19 33 22 Q35 25 31 28 Q27 25 29 22Z" fill="#FF4D6D"/>
+            <!-- destellos amor -->
+            <line x1="23" y1="20" x2="25" y2="23" stroke="#FF4D6D" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+            <line x1="39" y1="20" x2="37" y2="23" stroke="#FF4D6D" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+            <line x1="31" y1="16" x2="31" y2="19" stroke="#FF4D6D" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="card-title">El buen samaritano</div>
+        <div class="card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#bbb" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#bbb" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="#bbb" stroke-width="2"/></svg>22 de marzo de 2026</div>
+        <div class="card-sep"></div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://leirylauramc.github.io/El_buen_samaritano/El_buen_samaritano.html" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            Proyección para la clase
+          </a>
+          <a class="link-btn secondary" href="https://leirylauramc.github.io/El_buen_samaritano/El_buen_samaritano_guia_docente.html" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="#1a1a2e" stroke-width="2" stroke-linecap="round"/></svg>
+            Guía del docente
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+
+  <!-- ── SECCIÓN: CAPACITACIONES 2026 + ASISTENCIA 2026 ── -->
+  <div class="section-header">
+    <div class="section-pill">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#FFD166" stroke-width="2.2"/><path d="M12 6v6l4 2" stroke="#FFD166" stroke-width="2.2" stroke-linecap="round"/></svg>
+      Recursos 2026
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="extra-grid">
+
+    <!-- Capacitaciones -->
+    <div class="extra-card ex-youtube">
+      <div class="extra-card-inner">
+        <div class="extra-card-top">
+          <div class="extra-icon-wrap">
+            <!-- YouTube logo SVG -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#fff"/>
+              <polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="#FF0000"/>
+            </svg>
+          </div>
+          <div class="extra-title">Capacitaciones 2026</div>
+        </div>
+        <div class="card-sep"></div>
+        <div class="extra-desc">Lista de reproducción en YouTube con todas las capacitaciones del ministerio Semilleros del año 2026.</div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://youtube.com/playlist?list=PLG7UfD7-961n7lkS9p_aY9KoznMCDDHCV&si=vMOp4ytlZiOQ-x3K" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="#fff"/></svg>
+            Ver lista de reproducción
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asistencia -->
+    <div class="extra-card ex-excel">
+      <div class="extra-card-inner">
+        <div class="extra-card-top">
+          <div class="extra-icon-wrap">
+            <!-- Excel logo SVG -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="20" height="18" rx="2" fill="#fff"/>
+              <rect x="2" y="3" width="11" height="18" rx="2" fill="#1D6F42"/>
+              <path d="M5 8l3 4-3 4M10 16h5M10 12h5M10 8h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="extra-title">Asistencia 2026</div>
+        </div>
+        <div class="card-sep"></div>
+        <div class="extra-desc">Registro semanal de asistencia de los niños del ministerio Semilleros durante el año 2026.</div>
+        <div class="card-links">
+          <a class="link-btn primary" href="https://onedrive.live.com/:x:/g/personal/A8B6BEE1C9F72879/IQCOfr6NemUqSJ-ExJxXvb4LAWneKREqoO2p96Fwrq5bTe8?resid=A8B6BEE1C9F72879!s8dbe7e8e657a482a9f84c49c57bdbe0b&ithint=file%2Cxlsx&e=zdDzlN&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3gvYy9BOEI2QkVFMUM5RjcyODc5L0lRQ09mcjZOZW1VcVNKLUV4SnhYdmI0TEFXbmVLUkVxb08ycDk2RndycTViVGU4P2U9emREemxO" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#fff" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="#fff" stroke-width="2"/></svg>
+            Ver registro de asistencia
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /extra-grid -->
+
+  <div style="height:3px; border-radius:10px; margin-top:1rem; background: linear-gradient(to right, transparent, #FF4D6D, #FF8C42, #FFD166, #06D6A0, #118AB2, #9B5DE5, #F72585, transparent);"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-dots">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    Semilleros · Iglesia Gosén
+    <div class="footer-dots">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
