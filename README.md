@@ -1,2 +1,2 @@
 # ❤️ Semilleros
-[Abrir proyección](https://leirylauramc.github.io/Semilleros/)
+[Abrir página web](https://leirylauramc.github.io/Semilleros/)
