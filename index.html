@@ -323,7 +323,7 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   align-items: start;
   gap: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .extra-card {
@@ -491,21 +491,39 @@ main {
 footer {
   position: relative; z-index: 10;
   text-align: center;
-  padding: 2.5rem 1rem 3rem;
+  padding: 0 1rem 3rem;
+}
+.footer-rainbow {
+  height: 5px;
+  background: linear-gradient(90deg, var(--rojo), var(--naranja), var(--amarillo), var(--verde), var(--azul), var(--morado), var(--rosa));
+  background-size: 200% 100%;
+  animation: slideColors 4s linear infinite;
+  margin-bottom: 2rem;
 }
 .footer-inner {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  background: var(--oscuro);
-  color: #fff;
-  padding: 0.7rem 2rem;
-  border-radius: 50px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  gap: 0.75rem;
 }
-.footer-dots { display: flex; gap: 5px; }
+.footer-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+.footer-text .f-semilleros { color: var(--rojo); }
+.footer-text .f-sep        { color: var(--oscuro); opacity: 0.25; margin: 0 0.3rem; }
+.footer-text .f-gosen      { color: var(--azul); }
+.footer-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--oscuro);
+  opacity: 0.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.footer-dots { display: flex; gap: 6px; justify-content: center; }
 .footer-dots span {
   width: 8px; height: 8px;
   border-radius: 50%;
@@ -513,10 +531,12 @@ footer {
   animation: bounceDot 1.2s ease-in-out infinite;
 }
 .footer-dots span:nth-child(1){ background:var(--rojo);     animation-delay:0s; }
-.footer-dots span:nth-child(2){ background:var(--amarillo); animation-delay:0.15s; }
-.footer-dots span:nth-child(3){ background:var(--verde);    animation-delay:0.3s; }
-.footer-dots span:nth-child(4){ background:var(--azul);     animation-delay:0.45s; }
-.footer-dots span:nth-child(5){ background:var(--morado);   animation-delay:0.6s; }
+.footer-dots span:nth-child(2){ background:var(--naranja);  animation-delay:0.15s; }
+.footer-dots span:nth-child(3){ background:var(--amarillo); animation-delay:0.3s; }
+.footer-dots span:nth-child(4){ background:var(--verde);    animation-delay:0.45s; }
+.footer-dots span:nth-child(5){ background:var(--azul);     animation-delay:0.6s; }
+.footer-dots span:nth-child(6){ background:var(--morado);   animation-delay:0.75s; }
+.footer-dots span:nth-child(7){ background:var(--rosa);     animation-delay:0.9s; }
 @keyframes bounceDot {
   0%,100%{ transform: translateY(0); }
   50%    { transform: translateY(-5px); }
@@ -804,7 +824,7 @@ footer {
         <div class="card-sep"></div>
         <div class="card-links">
           <a class="link-btn primary" href="https://leirylauramc.github.io/Scape_room_biblico_La_parabola_de_la_viuda_persistente/" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="#fff"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
             Proyección para la clase
           </a>
         </div>
@@ -986,20 +1006,22 @@ footer {
 
   </div><!-- /extra-grid -->
 
-  <div style="height:3px; border-radius:10px; margin-top:1rem; background: linear-gradient(to right, transparent, #FF4D6D, #FF8C42, #FFD166, #06D6A0, #118AB2, #9B5DE5, #F72585, transparent);"></div>
 
 </main>
 
 <!-- FOOTER -->
 <footer>
+  <div class="footer-rainbow"></div>
   <div class="footer-inner">
     <div class="footer-dots">
-      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
-    Semilleros · Iglesia Gosén
-    <div class="footer-dots">
-      <span></span><span></span><span></span><span></span><span></span>
+    <div class="footer-text">
+      <span class="f-semilleros">Semilleros</span>
+      <span class="f-sep">·</span>
+      <span class="f-gosen">Iglesia Gosén</span>
     </div>
+    <div class="footer-sub">Ministerio Infantil · 2026</div>
   </div>
 </footer>
 
