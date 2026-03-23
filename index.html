@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Semilleros</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 88 C50 88 10 60 10 35 C10 20 22 12 35 18 C42 21 50 30 50 30 C50 30 58 21 65 18 C78 12 90 20 90 35 C90 60 50 88 50 88Z' fill='%23FF4D6D'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -322,6 +321,7 @@ main {
 .extra-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: start;
   gap: 2rem;
   margin-bottom: 4rem;
 }
@@ -396,6 +396,96 @@ main {
 .ex-youtube .link-btn.primary { background: #FF0000; color: #fff; box-shadow: 0 4px 0 #8b0000; }
 .ex-excel   .link-btn.primary { background: #1D6F42; color: #fff; box-shadow: 0 4px 0 #0e3d24; }
 .extra-card .link-btn.primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+/* ── DROPDOWN CAPACITACIONES ── */
+.cap-dropdown-wrap {
+  position: relative;
+  width: 100%;
+}
+.cap-dropdown-btn {
+  width: 100%;
+  justify-content: flex-start;
+  background: #FF0000 !important;
+  box-shadow: 0 4px 0 #8b0000 !important;
+}
+.cap-chevron {
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.cap-dropdown-wrap.open .cap-chevron {
+  transform: rotate(180deg);
+}
+.cap-menu {
+  display: none;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  background: var(--fondo);
+  border: 2px solid rgba(26,26,46,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(26,26,46,0.08);
+  animation: menuPop 0.25s cubic-bezier(.34,1.56,.64,1) both;
+}
+.cap-dropdown-wrap.open .cap-menu {
+  display: flex;
+}
+@keyframes menuPop {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cap-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  color: var(--oscuro);
+  transition: background 0.15s ease;
+  cursor: pointer;
+  background: transparent;
+}
+.cap-item:hover {
+  background: rgba(26,26,46,0.05);
+}
+.cap-item-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: #fff;
+}
+.cap-yt  { background: #FF0000; }
+.cap-pdf { background: #fff; }
+.cap-pdf-naranja { background: #fff5ee; }
+.cap-pdf-morado  { background: #f5eeff; }
+.cap-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  flex: 1;
+  min-width: 0;
+}
+.cap-item-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.95rem;
+  color: var(--oscuro);
+  line-height: 1.2;
+}
+.cap-item-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0.02em;
+}
+.cap-menu-divider {
+  height: 2px;
+  background: var(--oscuro);
+  opacity: 0.08;
+  margin: 0;
+}
 
 /* ── FOOTER ── */
 footer {
@@ -825,10 +915,46 @@ footer {
         <div class="card-sep"></div>
         <div class="extra-desc">Lista de reproducción en YouTube con todas las capacitaciones del ministerio Semilleros del año 2026.</div>
         <div class="card-links">
-          <a class="link-btn primary" href="https://youtube.com/playlist?list=PLG7UfD7-961n7lkS9p_aY9KoznMCDDHCV&si=vMOp4ytlZiOQ-x3K" target="_blank">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="#fff"/></svg>
-            Ver lista de reproducción
-          </a>
+          <div class="cap-dropdown-wrap">
+            <button class="link-btn primary cap-dropdown-btn" onclick="toggleCapMenu(event)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Ver recursos
+              <svg class="cap-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:auto"><path d="M6 9l6 6 6-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="cap-menu" id="capMenu">
+              <a class="cap-item" href="https://youtube.com/playlist?list=PLG7UfD7-961n7lkS9p_aY9KoznMCDDHCV&si=vMOp4ytlZiOQ-x3K" target="_blank">
+                <span class="cap-item-icon cap-yt">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="#fff"/><polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="#FF0000"/></svg>
+                </span>
+                <span class="cap-item-text">
+                  <span class="cap-item-label">Lista de reproducción</span>
+                  <span class="cap-item-sub">YouTube · Todas las capacitaciones</span>
+                </span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;opacity:.35"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <div class="cap-menu-divider"></div>
+              <a class="cap-item" href="capacitacion_2.pdf" target="_blank">
+                <span class="cap-item-icon cap-pdf cap-pdf-naranja">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#FF8C42"/><polyline points="14,2 14,8 20,8" fill="#ffd4b3"/><line x1="8" y1="13" x2="16" y2="13" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="16.5" x2="13" y2="16.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+                <span class="cap-item-text">
+                  <span class="cap-item-label">Capacitación 2</span>
+                  <span class="cap-item-sub">Estilos de aprendizaje · PDF</span>
+                </span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;opacity:.35"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a class="cap-item" href="capacitacion_3.pdf" target="_blank">
+                <span class="cap-item-icon cap-pdf cap-pdf-morado">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#9B5DE5"/><polyline points="14,2 14,8 20,8" fill="#d4b3ff"/><line x1="8" y1="13" x2="16" y2="13" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="16.5" x2="13" y2="16.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+                <span class="cap-item-text">
+                  <span class="cap-item-label">Capacitación 3</span>
+                  <span class="cap-item-sub">Estructura de una clase · PDF</span>
+                </span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;opacity:.35"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -877,5 +1003,15 @@ footer {
   </div>
 </footer>
 
+<script>
+function toggleCapMenu(e) {
+  e.stopPropagation();
+  const wrap = e.currentTarget.closest('.cap-dropdown-wrap');
+  wrap.classList.toggle('open');
+}
+document.addEventListener('click', function() {
+  document.querySelectorAll('.cap-dropdown-wrap.open').forEach(w => w.classList.remove('open'));
+});
+</script>
 </body>
 </html>
