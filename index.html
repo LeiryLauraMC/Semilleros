@@ -204,11 +204,13 @@ main {
 .card.c-verde::after  { background: #047a5b; }
 .card.c-azul::after   { background: #0a5c7a; }
 .card.c-morado::after { background: #5e2a99; }
-.card.c-rojo   { background: var(--rojo); }
-.card.c-naranja{ background: var(--naranja); }
-.card.c-verde  { background: var(--verde); }
-.card.c-azul   { background: var(--azul); }
-.card.c-morado { background: var(--morado); }
+.card.c-amarillo::after{ background: #c9a000; }
+.card.c-rojo    { background: var(--rojo); }
+.card.c-naranja { background: var(--naranja); }
+.card.c-verde   { background: var(--verde); }
+.card.c-azul    { background: var(--azul); }
+.card.c-morado  { background: var(--morado); }
+.card.c-amarillo{ background: var(--amarillo); }
 .card:nth-child(1) { animation-delay: 0.05s; }
 .card:nth-child(2) { animation-delay: 0.12s; }
 .card:nth-child(3) { animation-delay: 0.19s; }
@@ -280,6 +282,7 @@ main {
 .c-verde   .card-sep { background: var(--verde); }
 .c-azul    .card-sep { background: var(--azul); }
 .c-morado  .card-sep { background: var(--morado); }
+.c-amarillo .card-sep { background: var(--amarillo); }
 .card-links { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
 .link-btn {
   display: flex;
@@ -301,6 +304,7 @@ main {
 .c-verde   .link-btn.primary { background: var(--verde);   color: #fff; box-shadow: 0 4px 0 #047a5b; }
 .c-azul    .link-btn.primary { background: var(--azul);    color: #fff; box-shadow: 0 4px 0 #0a5c7a; }
 .c-morado  .link-btn.primary { background: var(--morado);  color: #fff; box-shadow: 0 4px 0 #5e2a99; }
+.c-amarillo .link-btn.primary { background: var(--amarillo); color: var(--oscuro); box-shadow: 0 4px 0 #c9a000; }
 .link-btn.primary:hover { transform: translateY(-2px); filter: brightness(1.08); }
 .link-btn.primary:active { transform: translateY(2px); box-shadow: none !important; }
 .link-btn.secondary {
@@ -348,8 +352,8 @@ main {
 
 .extra-card.ex-youtube { background: #FF0000; }
 .extra-card.ex-youtube::after { background: #8b0000; }
-.extra-card.ex-excel   { background: #1D6F42; }
-.extra-card.ex-excel::after   { background: #0e3d24; }
+.extra-card.ex-excel   { background: var(--verde); }
+.extra-card.ex-excel::after   { background: #047a5b; }
 .extra-card.ex-cheatsheet { background: #F72585; }
 .extra-card.ex-cheatsheet::after { background: #a50f59; }
 
@@ -375,7 +379,7 @@ main {
   flex-shrink: 0;
 }
 .ex-youtube .extra-icon-wrap { background: #FF0000; }
-.ex-excel   .extra-icon-wrap { background: #1D6F42; }
+.ex-excel   .extra-icon-wrap { background: var(--verde); }
 .ex-cheatsheet .extra-icon-wrap { background: #F72585; }
 
 .extra-icon-wrap svg { width: 28px; height: 28px; }
@@ -395,11 +399,11 @@ main {
 }
 .extra-card .card-sep { height: 3px; border-radius: 10px; }
 .ex-youtube .card-sep { background: #FF0000; }
-.ex-excel   .card-sep { background: #1D6F42; }
+.ex-excel   .card-sep { background: var(--verde); }
 .ex-cheatsheet .card-sep { background: #F72585; }
 
 .ex-youtube .link-btn.primary { background: #FF0000; color: #fff; box-shadow: 0 4px 0 #8b0000; }
-.ex-excel   .link-btn.primary { background: #1D6F42; color: #fff; box-shadow: 0 4px 0 #0e3d24; }
+.ex-excel   .link-btn.primary { background: var(--verde); color: #fff; box-shadow: 0 4px 0 #047a5b; }
 .ex-cheatsheet .link-btn.primary { background: #F72585; color: #fff; box-shadow: 0 4px 0 #a50f59; }
 .extra-card .link-btn.primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
@@ -780,7 +784,7 @@ footer {
     </div>
 
     <!-- 04 -->
-    <div class="card c-naranja">
+    <div class="card c-amarillo">
       <div class="card-inner">
         <div class="card-head">
           <div class="card-num">04</div>
